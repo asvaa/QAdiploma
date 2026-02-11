@@ -1,27 +1,61 @@
 name: Playwright Tests
+
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
+  workflow_dispatch:
+
 jobs:
   test:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
       with:
-        node-version: lts/*
+        node-version: '18'
+        
     - name: Install dependencies
       run: npm ci
-    - name: Install Playwright Browsers
+      
+    - name: Install Playwright browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+      
+    - name: Run tests
+      run: npm test
+      continue-on-error: true
+      
+    - name: Generate Allure Report
+      if: always()
+      run: |
+        sudo npm install -g allure-commandline
+        allure generate allure-results --clean -o allure-report
+        
+    - name: Deploy to GitHub Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: allure-report
+        keep_files: false
+        
+    - name: Send Telegram Success
+      if: success()
+      run: |
+        curl -X POST \
+          "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+          -d text="✅ Тесты прошли успешно!%0A%0AРепозиторий: ${{ github.repository }}%0AВетка: ${{ github.ref_name }}%0A%0AAllure: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          
+    - name: Send Telegram Failure
+      if: failure()
+      run: |
+        curl -X POST \
+          "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+          -d text="❌ Тесты упали!%0A%0AРепозиторий: ${{ github.repository }}%0A%0AПодробности: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"

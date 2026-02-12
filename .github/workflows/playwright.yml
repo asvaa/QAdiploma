@@ -43,16 +43,17 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
           keep_files: false
-          - name: Send Telegram notification
-      if: always()
-      run: |
-        if [ "${{ job.status }}" == "success" ]; then
-          STATUS="✅ Тесты прошли успешно!"
-        else
-          STATUS="❌ Тесты упали!"
-        fi
-        
-        curl -X POST \
-          https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
-          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-          -d text="${STATUS} - Репозиторий: ${{ github.repository }}"
+
+      - name: Send Telegram notification
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            STATUS="✅ Тесты прошли успешно!"
+          else
+            STATUS="❌ Тесты упали!"
+          fi
+
+          curl -X POST \
+            https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="${STATUS} - Репозиторий: ${{ github.repository }}"

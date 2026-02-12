@@ -57,3 +57,10 @@ jobs:
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
             -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
             -d text="${STATUS} - Репозиторий: ${{ github.repository }}"
+
+      - name: Upload to Allure TestOps
+        if: always()
+        run: |
+          wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O allurectl
+          chmod +x allurectl
+          ./allurectl upload allure-results --endpoint https://allure.autotests.cloud --project-id ${{ secrets.ALLURE_PROJECT_ID }} --token ${{ secrets.ALLURE_TOKEN }}

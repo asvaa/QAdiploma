@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import MainPage from "../../pages/MainPage.js";
 import RegisterPage from "../../pages/RegisterPage.js";
 import DataGenerator from "../../helpers/dataGenerator.js";

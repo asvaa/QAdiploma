@@ -100,24 +100,14 @@ npm test
 
 ## Скриншоты
 
-### GitHub Actions
+Скриншоты результатов работы находятся в папке `docs/screenshots/`:
 
-![GitHub Actions](docs/screenshots/github-actions.png)
-
-### Telegram
-
-![Telegram](docs/screenshots/telegram-notification.png)
-
-### Allure Report
-
-![Allure](docs/screenshots/allure-overview.png)
-
-### Allure TestOps
-
-![TestOps](docs/screenshots/allure-testops-overview.png)
+- GitHub Actions - успешные запуски тестов
+- Telegram - уведомления о результатах
+- Allure Report - отчёты на GitHub Pages
+- Allure TestOps - результаты в TestOps
 
 ---
-
 ## Контакты
 
 GitHub: [@asvaa](https://github.com/asvaa)

@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import ProductPage from "../../pages/ProductPage.js";
 
 test.describe("Корзина покупок", () => {
-  test("Тест 5: Добавление товара в корзину", async ({ page }) => {
+  test("Товар успешно добавляется в корзину", async ({ page }) => {
     await page.goto("/computing-and-internet");
 
     const productPage = new ProductPage(page);

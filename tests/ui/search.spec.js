@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import MainPage from "../../pages/MainPage.js";
 
 test.describe("Поиск товаров", () => {
-  test("Тест 3: Поиск существующего товара", async ({ page }) => {
+  test("Поиск существующего товара возвращает результаты", async ({ page }) => {
     const mainPage = new MainPage(page);
     await mainPage.open();
 
@@ -14,7 +14,9 @@ test.describe("Поиск товаров", () => {
     await expect(page).toHaveURL(/search/);
   });
 
-  test("Тест 4: Поиск несуществующего товара", async ({ page }) => {
+  test("Поиск несуществующего товара показывает сообщение об отсутствии результатов", async ({
+    page,
+  }) => {
     const mainPage = new MainPage(page);
     await mainPage.open();
 

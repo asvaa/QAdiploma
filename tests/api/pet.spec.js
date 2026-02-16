@@ -14,9 +14,7 @@ test.describe("API тесты питомцев", () => {
     for (const id of createdPetIds) {
       try {
         await petService.deletePet(id);
-      } catch (e) {
-        console.log("Не удалось удалить питомца:", id);
-      }
+      } catch (e) {}
     }
     createdPetIds = [];
   });

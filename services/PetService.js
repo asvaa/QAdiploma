@@ -1,41 +1,43 @@
-import { expect } from '@playwright/test';
+import { test } from "@playwright/test";
 
 class PetService {
-  
-  constructor(request) {
+  constructor(request, baseURL = "https://petstore.swagger.io/v2") {
     this.request = request;
-    this.baseURL = 'https://petstore.swagger.io/v2';
+    this.baseURL = baseURL;
   }
+
   async createPet(petData) {
-    const response = await this.request.post(`${this.baseURL}/pet`, {
-      data: petData
+    return await test.step("Создать питомца", async () => {
+      const response = await this.request.post(`${this.baseURL}/pet`, {
+        data: petData,
+      });
+      return response;
     });
-    return response;
   }
 
   async getPet(petId) {
-    const response = await this.request.get(`${this.baseURL}/pet/${petId}`);
-    return response;
+    return await test.step(`Получить питомца по ID: ${petId}`, async () => {
+      const response = await this.request.get(`${this.baseURL}/pet/${petId}`);
+      return response;
+    });
   }
 
   async updatePet(petData) {
-    const response = await this.request.put(`${this.baseURL}/pet`, {
-      data: petData
+    return await test.step("Обновить данные питомца", async () => {
+      const response = await this.request.put(`${this.baseURL}/pet`, {
+        data: petData,
+      });
+      return response;
     });
-    return response;
   }
-
 
   async deletePet(petId) {
-    const response = await this.request.delete(`${this.baseURL}/pet/${petId}`);
-    return response;
-  }
-
-  async verifyPetCreated(response, expectedName) {
-    expect(response.status()).toBe(200);
-    const data = await response.json();
-    expect(data.name).toBe(expectedName);
-    return data;
+    return await test.step(`Удалить питомца: ${petId}`, async () => {
+      const response = await this.request.delete(
+        `${this.baseURL}/pet/${petId}`
+      );
+      return response;
+    });
   }
 }
 

@@ -14,6 +14,10 @@ class ProductPage {
   async verifyAdded() {
     await expect(this.notification).toBeVisible();
   }
+
+  getNotification() {
+    return this.notification;
+  }
 }
 
 export default ProductPage;

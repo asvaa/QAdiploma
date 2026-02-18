@@ -1,13 +1,12 @@
-import { test, expect } from "@playwright/test";
-import ProductPage from "../../pages/ProductPage.js";
+import { test, expect } from "../fixtures.js";
 
 test.describe("Корзина покупок", () => {
-  test("Товар успешно добавляется в корзину", async ({ page }) => {
+  test("Товар успешно добавляется в корзину", async ({ shopFacade, page }) => {
     await page.goto("/computing-and-internet");
 
-    const productPage = new ProductPage(page);
-    await productPage.addToCart();
+    await shopFacade.addToCart();
 
-    await productPage.verifyAdded();
+    const notification = shopFacade.getNotification();
+    await expect(notification).toBeVisible();
   });
 });

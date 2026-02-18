@@ -1,31 +1,20 @@
-import { test, expect } from "@playwright/test";
-import MainPage from "../../pages/MainPage.js";
-import RegisterPage from "../../pages/RegisterPage.js";
-import DataGenerator from "../../helpers/dataGenerator.js";
+import { test, expect } from "../fixtures.js";
+import UserBuilder from "../../helpers/UserBuilder.js";
 
 test.describe("Регистрация пользователя", () => {
   test("Новый пользователь может успешно зарегистрироваться", async ({
-    page,
+    shopFacade,
   }) => {
-    const userData = DataGenerator.generateUser();
+    const userData = new UserBuilder().withRandomData().build();
 
-    const mainPage = new MainPage(page);
-    await mainPage.open();
+    await shopFacade.registerUser(userData);
 
-    await mainPage.clickRegister();
-
-    const registerPage = new RegisterPage(page);
-    await registerPage.register(userData);
-
-    const successMessage = registerPage.getSuccessMessage();
+    const successMessage = shopFacade.getSuccessMessage();
     await expect(successMessage).toContainText("Your registration completed");
   });
 
   test("Форма регистрации корректно отображается", async ({ page }) => {
-    const mainPage = new MainPage(page);
-    await mainPage.open();
-    await mainPage.clickRegister();
-    const registerPage = new RegisterPage(page);
-    await page.waitForURL("**/register");
+    await page.goto("/register");
+    await expect(page).toHaveURL(/.*register/);
   });
 });

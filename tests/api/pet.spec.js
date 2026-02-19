@@ -1,5 +1,5 @@
 import { test, expect } from "../fixtures.js";
-import PetBuilder from "../../helpers/PetBuilder.js";
+import { PetBuilder } from "../../helpers/index.js";
 
 test.describe("API тесты питомцев", () => {
   let createdPetIds = [];

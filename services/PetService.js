@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
 class PetService {
-  constructor(request, baseURL = "https://petstore.swagger.io/v2") {
+  constructor(request, baseURL) {
     this.request = request;
     this.baseURL = baseURL;
   }

@@ -9,8 +9,8 @@ test.describe("Регистрация пользователя", () => {
 
     await shopFacade.registerUser(userData);
 
-    const successMessage = shopFacade.getSuccessMessage();
-    await expect(successMessage).toContainText("Your registration completed");
+    const successText = await shopFacade.getRegistrationSuccessText();
+    expect(successText).toContain('Your registration completed');
   });
 
   test("Форма регистрации корректно отображается", async ({ page }) => {

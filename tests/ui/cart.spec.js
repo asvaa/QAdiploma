@@ -1,12 +1,14 @@
 import { test, expect } from "../fixtures.js";
 
 test.describe("Корзина покупок", () => {
-  test("Товар успешно добавляется в корзину", async ({ shopFacade, page }) => {
+  test("Товар успешно добавляется в корзину", async ({ page }) => {
     await page.goto("/computing-and-internet");
-
-    await shopFacade.addToCart();
-
-    const notification = shopFacade.getNotification();
+    
+    // Добавить товар в корзину
+    await page.locator('input[value="Add to cart"]').first().click();
+    
+    // Проверить уведомление
+    const notification = page.locator('.bar-notification');
     await expect(notification).toBeVisible();
   });
 });

@@ -1,5 +1,5 @@
 import { test as base } from "@playwright/test";
-import ShopFacade from "../pages/ShopFacade.js";
+import { ShopFacade } from "../pages/index.js";
 import PetService from "../services/PetService.js";
 
 export const test = base.extend({
@@ -8,7 +8,9 @@ export const test = base.extend({
   },
 
   petService: async ({ request }, use) => {
-    await use(new PetService(request));
+    const baseURL =
+      process.env.PETSTORE_BASE_URL || "https://petstore.swagger.io/v2";
+    await use(new PetService(request, baseURL));
   },
 });
 

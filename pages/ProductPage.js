@@ -1,5 +1,3 @@
-import { expect } from "@playwright/test";
-
 class ProductPage {
   constructor(page) {
     this.page = page;
@@ -9,10 +7,6 @@ class ProductPage {
 
   async addToCart() {
     await this.addToCartButton.click();
-  }
-
-  async verifyAdded() {
-    await expect(this.notification).toBeVisible();
   }
 
   getNotification() {

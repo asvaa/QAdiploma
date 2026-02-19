@@ -10,3 +10,7 @@ node_modules/
 # Артефакты тестов
 allure-results/
 .DS_Store
+
+allure-report/
+.idea/
+.vscode/

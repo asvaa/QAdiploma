@@ -23,10 +23,6 @@ class MainPage {
     await this.searchInput.fill(productName);
     await this.searchButton.click();
   }
-
-  async verifyUserLoggedIn(email) {
-    await expect(this.accountLink).toHaveText(email);
-  }
 }
 
 export default MainPage;

@@ -25,8 +25,9 @@ class ShopFacade {
     });
   }
 
-  getSuccessMessage() {
-    return this.registerPage.getSuccessMessage();
+  async getRegistrationSuccessText() {
+    const element = this.registerPage.getSuccessMessage();
+    return await element.textContent();
   }
 
   async searchProduct(productName) {
@@ -40,10 +41,6 @@ class ShopFacade {
     await test.step("Добавить товар в корзину", async () => {
       await this.productPage.addToCart();
     });
-  }
-
-  getNotification() {
-    return this.productPage.getNotification();
   }
 }
 

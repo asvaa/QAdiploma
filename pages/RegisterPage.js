@@ -22,9 +22,6 @@ class RegisterPage {
     await this.registerButton.click();
   }
 
-  async submit() {
-    await this.registerButton.click();
-  }
   getSuccessMessage() {
     return this.page.locator(".result");
   }

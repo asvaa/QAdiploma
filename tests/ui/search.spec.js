@@ -7,7 +7,7 @@ test.describe("Поиск товаров", () => {
   }) => {
     await shopFacade.searchProduct("book");
 
-    const products = page.locator(".product-item");
+    const products = shopFacade.searchPage.getProductItems();
     await expect(products.first()).toBeVisible();
     await expect(page).toHaveURL(/search/);
   });
@@ -19,7 +19,7 @@ test.describe("Поиск товаров", () => {
     await shopFacade.searchProduct("xyz123notexist999");
 
     await expect(page).toHaveURL(/search/);
-    const noResults = page.locator(".no-result, .search-results");
+    const noResults = shopFacade.searchPage.getNoResultsMessage();
     await expect(noResults).toBeVisible({ timeout: 5000 });
   });
 });

@@ -2,6 +2,7 @@ import { test } from "@playwright/test";
 import MainPage from "./MainPage.js";
 import RegisterPage from "./RegisterPage.js";
 import ProductPage from "./ProductPage.js";
+import SearchPage from "./SearchPage.js";
 
 class ShopFacade {
   constructor(page) {
@@ -9,6 +10,7 @@ class ShopFacade {
     this.mainPage = new MainPage(page);
     this.registerPage = new RegisterPage(page);
     this.productPage = new ProductPage(page);
+    this.searchPage = new SearchPage(page);
   }
 
   async openMainPage() {

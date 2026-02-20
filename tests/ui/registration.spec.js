@@ -11,20 +11,20 @@ test.describe("Регистрация пользователя", () => {
     expect(successText).toContain("Your registration completed");
   });
 
-  test("Удаление товара из корзины работает корректно", async ({ page }) => {
+  test("Удаление товара из корзины работает корректно", async ({
+    shopFacade,
+    page,
+  }) => {
     await page.goto("/computing-and-internet");
 
-    await page.locator('input[value="Add to cart"]').first().click();
-    await page.waitForTimeout(1000);
+    await shopFacade.addToCart();
 
-    await page.goto("/cart");
+    await expect(shopFacade.productPage.getNotification()).toBeVisible();
 
-    const removeButton = page.locator('input[name="removefromcart"]').first();
-    await removeButton.check();
-    await page.locator('input[name="updatecart"]').click();
+    await shopFacade.cartPage.open();
+    await shopFacade.cartPage.removeFirstItem();
 
-    await expect(page.locator(".order-summary-content")).toContainText(
-      "Your Shopping Cart is empty!"
-    );
+    const emptyMessage = shopFacade.cartPage.getEmptyCartMessage();
+    await expect(emptyMessage).toContainText("Your Shopping Cart is empty!");
   });
 });

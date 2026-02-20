@@ -3,6 +3,7 @@ import MainPage from "./MainPage.js";
 import RegisterPage from "./RegisterPage.js";
 import ProductPage from "./ProductPage.js";
 import SearchPage from "./SearchPage.js";
+import CartPage from "./CartPage.js";
 
 class ShopFacade {
   constructor(page) {
@@ -11,6 +12,7 @@ class ShopFacade {
     this.registerPage = new RegisterPage(page);
     this.productPage = new ProductPage(page);
     this.searchPage = new SearchPage(page);
+    this.cartPage = new CartPage(page);
   }
 
   async openMainPage() {
